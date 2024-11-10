@@ -1,0 +1,47 @@
+import paho.mqtt.client as mqtt
+import csv
+import os
+
+# Konfigurasi MQTT
+mqtt_broker = "nae2e62a.ala.asia-southeast1.emqxsl.com"
+mqtt_port = 8883
+mqtt_user = "smode"
+mqtt_password = "12345678"
+mqtt_topic = "esp32/tes"  # Ganti dengan topik yang sesuai
+
+# Callback saat terhubung ke broker MQTT
+def on_connect(client, userdata, flags, rc):
+    print("Connected with result code " + str(rc))
+    client.subscribe(mqtt_topic)
+
+# Callback saat menerima pesan
+def on_message(client, userdata, msg):
+    payload = msg.payload.decode()
+    print("Received message: ", payload)
+
+    # Menyimpan data ke file CSV
+    file_exists = os.path.isfile('data.csv')
+
+    with open('data.csv', mode='a', newline='') as file:
+        writer = csv.writer(file)
+        # Tulis header jika file baru
+        if not file_exists:
+            header = ["PerTotal", "Jarak", "Percepatan", "PeJarak", "NilMamdani", 
+                      "DerAman", "DerSiaga", "DerBahaya", "Status", "ax", "ay", 
+                      "az", "accelX", "accelY", "accelZ"]
+            writer.writerow(header)
+        
+        # Tulis data ke file CSV
+        writer.writerow(payload.split(','))
+
+# Setup MQTT client
+client = mqtt.Client()
+client.on_connect = on_connect
+client.on_message = on_message
+
+# Koneksi ke broker MQTT
+client.username_pw_set(mqtt_user, mqtt_password)
+client.connect(mqtt_broker, mqtt_port, 60)
+
+# Menjalankan loop untuk menerima pesan
+client.loop_forever()  # Jalankan loop untuk terus mendengarkan pesan

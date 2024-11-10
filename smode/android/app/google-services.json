@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "829909632713",
+    "project_id": "smode-e4417",
+    "storage_bucket": "smode-e4417.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:829909632713:android:3fec7b20cd3ec19cf52f18",
+        "android_client_info": {
+          "package_name": "com.example.smode"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMVuptjh31BAyge-yCNcrHWKyGCc0PbBk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
